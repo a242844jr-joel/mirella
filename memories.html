@@ -20,24 +20,34 @@
         <div class="logo">Recuerdos 📸</div>
     </header>
 
-    <main class="memory-wall fade-in">
-        <div class="memory-card" style="--rot: -3deg">
-            <div class="card-inner">
-                <div class="img-box red-glow"><i class="fas fa-heart"></i></div>
-                <div class="card-text">Nuestra primera foto</div>
+    <main class="memory-container fade-in">
+        <div class="stack-wrapper">
+            <!-- Card 3 (Bottom) -->
+            <div class="memory-card stacked" style="--i:2">
+                <div class="card-inner">
+                    <div class="img-box black-glow"><i class="fas fa-star"></i></div>
+                    <div class="card-text">Nuestra Amistad</div>
+                </div>
+            </div>
+            <!-- Card 2 (Middle) -->
+            <div class="memory-card stacked" style="--i:1">
+                <div class="card-inner">
+                    <div class="img-box red-glow"><i class="fas fa-music"></i></div>
+                    <div class="card-text">Momentos Únicos</div>
+                </div>
+            </div>
+            <!-- Card 1 (Top) -->
+            <div class="memory-card stacked" style="--i:0">
+                <div class="card-inner">
+                    <div class="img-box black-glow"><i class="fas fa-heart"></i></div>
+                    <div class="card-text">Mirella & Yo</div>
+                </div>
             </div>
         </div>
-        <div class="memory-card" style="--rot: 2deg">
-            <div class="card-inner">
-                <div class="img-box black-glow"><i class="fas fa-music"></i></div>
-                <div class="card-text">Aquella noche...</div>
-            </div>
-        </div>
-        <div class="memory-card" style="--rot: -1deg">
-            <div class="card-inner">
-                <div class="img-box red-glow"><i class="fas fa-star"></i></div>
-                <div class="card-text">Brillando juntas</div>
-            </div>
+
+        <div class="hint-text">
+            <i class="fas fa-hand-pointer"></i>
+            <p>Toca la carta para ver la siguiente</p>
         </div>
     </main>
 
@@ -59,6 +69,43 @@
             <span>Sorpresa</span>
         </a>
     </nav>
+
+    <script>
+        const cards = document.querySelectorAll('.memory-card');
+        const wrapper = document.querySelector('.stack-wrapper');
+        let isAnimating = false;
+
+        cards.forEach((card) => {
+            card.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                // 1. Move the card away
+                card.classList.add('away');
+
+                // 2. Wait for the slide-out animation
+                setTimeout(() => {
+                    card.classList.remove('away');
+                    // 3. Move the card to the bottom of the stack (internally in DOM)
+                    wrapper.prepend(card);
+
+                    // 4. Update the visual styles (--i) for all cards
+                    const allCards = wrapper.querySelectorAll('.memory-card');
+                    allCards.forEach((c, index) => {
+                        // The last card in DOM (index 2) is the top one visually
+                        // We want: 
+                        // Top card (last in DOM): --i: 0
+                        // Middle card (second): --i: 1
+                        // Bottom card (first in DOM): --i: 2
+                        const visualIndex = allCards.length - 1 - index;
+                        c.style.setProperty('--i', visualIndex);
+                    });
+
+                    isAnimating = false;
+                }, 600);
+            });
+        });
+    </script>
 </body>
 
 </html>
