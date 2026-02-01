@@ -28,108 +28,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Quiz Logic ---
-    const questions = [
-        {
-            q: "¿Cuál es mi color favorito?",
-            options: ["Azul", "Rojo", "Verde", "Negro"],
-            correct: 1 // Index of correct answer
-        },
-        {
-            q: "¿Qué comida no puedo resistir?",
-            options: ["Pizza", "Sushi", "Hamburguesa", "Tacos"],
-            correct: 0
-        },
-        {
-            q: "¿Dónde nos conocimos?",
-            options: ["En el colegio", "En una fiesta", "Por internet", "En el trabajo"],
-            correct: 0
-        },
-        {
-            q: "¿Cuál es mi mayor sueño?",
-            options: ["Viajar por el mundo", "Ser millonario", "Tener un perro", "Ser feliz contigo"],
-            correct: 3
-        }
-    ];
+    // --- Garden Logic ---
+    const gardenContainer = document.getElementById('garden-container');
+    const gardenHint = document.querySelector('.garden-hint');
 
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let isAnswering = false;
+    if (gardenContainer) {
+        gardenContainer.addEventListener('click', (e) => {
+            // Hide hint on first click
+            if (gardenHint.style.opacity !== '0') {
+                gardenHint.style.opacity = '0';
+            }
 
-    const quizCard = document.getElementById('quiz-card');
-    const questionText = document.getElementById('question-text');
-    const optionsGrid = document.getElementById('options-grid');
-    const quizScore = document.getElementById('quiz-score');
-    const finalScoreDisplay = document.getElementById('final-score');
-    const finalMessage = document.getElementById('final-message');
-
-    function loadQuestion() {
-        if (currentQuestionIndex >= questions.length) {
-            showScore();
-            return;
-        }
-
-        const currentQ = questions[currentQuestionIndex];
-        questionText.textContent = currentQ.q;
-        optionsGrid.innerHTML = '';
-
-        currentQ.options.forEach((opt, index) => {
-            const btn = document.createElement('div');
-            btn.className = 'option-btn';
-            btn.textContent = opt;
-            btn.onclick = () => handleAnswer(index, btn);
-            optionsGrid.appendChild(btn);
+            createRose(e.clientX, e.clientY);
         });
+
+        // Touch support for mobile (to prevent double firing if both exist, usually click covers it but touchstart is faster)
+        // Simple click is enough for now as it maps to tap.
     }
 
-    function handleAnswer(selectedIndex, btnElement) {
-        if (isAnswering) return;
-        isAnswering = true;
+    function createRose(x, y) {
+        const rose = document.createElement('div');
+        rose.classList.add('rose');
 
-        const correctIndex = questions[currentQuestionIndex].correct;
+        // Random slight rotation for variety
+        const randomRotation = Math.random() * 360;
+        rose.style.setProperty('--r', `${randomRotation}deg`);
 
-        if (selectedIndex === correctIndex) {
-            btnElement.classList.add('correct');
-            score++;
-            playConfettiShort();
-        } else {
-            btnElement.classList.add('wrong');
-            // Highlight correct one
-            optionsGrid.children[correctIndex].classList.add('correct');
-        }
+        // Position centering
+        rose.style.left = `${x}px`;
+        rose.style.top = `${y}px`;
 
-        setTimeout(() => {
-            currentQuestionIndex++;
-            loadQuestion();
-            isAnswering = false;
-        }, 1200);
-    }
+        gardenContainer.appendChild(rose);
 
-    function showScore() {
-        quizCard.style.display = 'none';
-        quizScore.style.display = 'block';
-        finalScoreDisplay.textContent = `${score}/${questions.length}`;
+        // Optional: Play soft vibration if supported
+        if (navigator.vibrate) navigator.vibrate(5);
 
-        if (score === questions.length) {
-            finalMessage.textContent = "¡Increíble! Me conoces mejor que nadie. 💖";
-            startConfetti();
-        } else if (score >= questions.length / 2) {
-            finalMessage.textContent = "¡Nada mal! Pero aún tienes secretos por descubrir. 😉";
-        } else {
-            finalMessage.textContent = "¿Seguro que somos amigos? ¡Es broma! Inténtalo de nuevo. 😂";
+        // Limit number of roses to keep performance high
+        if (gardenContainer.children.length > 50) {
+            // Remove the second child (first is likely the hint or old rose)
+            // Strategy: Remove the oldest rose. 
+            // Child 0 is hint? Check class.
+            const roses = gardenContainer.querySelectorAll('.rose');
+            if (roses.length > 50) {
+                roses[0].remove();
+            }
         }
     }
-
-    window.restartQuiz = function () {
-        currentQuestionIndex = 0;
-        score = 0;
-        quizCard.style.display = 'block';
-        quizScore.style.display = 'none';
-        loadQuestion();
-    };
-
-    // Initialize Quiz if elements exist
-    if (questionText) loadQuestion();
 
 
     // --- Gift Box Interaction ---

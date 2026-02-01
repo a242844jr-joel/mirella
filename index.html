@@ -54,8 +54,8 @@
                 </div>
 
                 <div class="actions">
-                    <button class="action-btn primary" onclick="navTo('quiz')">
-                        <i class="fas fa-gamepad"></i> Jugar al Quiz
+                    <button class="action-btn primary" onclick="navTo('garden')">
+                        <i class="fas fa-seedling"></i> Crear Jardín
                     </button>
                     <button class="action-btn" onclick="navTo('surprise')" style="margin-left: 10px; background: #333;">
                         <i class="fas fa-gift"></i>
@@ -63,28 +63,12 @@
                 </div>
             </section>
 
-            <!-- QUIZ SECTION (Replaces Letter) -->
-            <section id="quiz" class="page">
-                <div class="quiz-container">
-                    <h2 class="section-title">¿Cuánto me conoces? 🎮</h2>
-
-                    <!-- Question Card -->
-                    <div id="quiz-card" class="glass-card quiz-card">
-                        <h3 id="question-text" class="question-text">Cargando pregunta...</h3>
-                        <div id="options-grid" class="options-grid">
-                            <!-- Options injected via JS -->
-                        </div>
-                    </div>
-
-                    <!-- Score Screen (Hidden initially) -->
-                    <div id="quiz-score" class="glass-card quiz-score">
-                        <h2>¡Juego Terminado!</h2>
-                        <p>Tu puntuación final:</p>
-                        <div class="score-number" id="final-score">0/0</div>
-                        <p id="final-message">...</p>
-                        <button class="action-btn" onclick="restartQuiz()" style="margin: 20px auto;">
-                            <i class="fas fa-redo"></i> Jugar otra vez
-                        </button>
+            <!-- GARDEN SECTION (Replaces Letter/Quiz) -->
+            <section id="garden" class="page">
+                <div id="garden-container" class="garden-container">
+                    <div class="garden-hint">
+                        <i class="fas fa-hand-pointer"></i>
+                        <p>Toca la pantalla para plantar una rosa 🌹</p>
                     </div>
                 </div>
             </section>
@@ -153,10 +137,9 @@
                 <i class="fas fa-home"></i>
                 <span>Inicio</span>
             </div>
-            <!-- Changed Loop/Letter to Game -->
-            <div class="nav-item" data-target="quiz">
-                <i class="fas fa-gamepad"></i>
-                <span>Quiz</span>
+            <div class="nav-item" data-target="garden">
+                <i class="fas fa-seedling"></i>
+                <span>Flores</span>
             </div>
             <div class="nav-item" data-target="gallery">
                 <i class="fas fa-images"></i>
