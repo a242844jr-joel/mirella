@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Mirella 💖</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#FFC3A0">
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="floating-shapes">
+        <div class="shape s1"></div>
+        <div class="shape s2"></div>
+        <div class="shape s3"></div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Main App Container -->
+    <main class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">Mirella ✨</div>
+            <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+        </header>
+
+        <!-- Dynamic Sections -->
+        <div id="content-display" class="content-display">
+            <!-- Content will be injected/toggled here -->
+
+            <!-- HOME SECTION -->
+            <section id="home" class="page active">
+                <div class="hero">
+                    <div class="profile-frame">
+                        <img src="https://ui-avatars.com/api/?name=Mirella&background=FFC3A0&color=fff&size=256"
+                            alt="Mirella" class="profile-img">
+                        <div class="status-badge">💖</div>
+                    </div>
+                    <h1 class="animate-text">¡Hola, Mirella!</h1>
+                    <p class="subtitle">Bienvenida a tu regalo digital.</p>
+                </div>
+
+                <div class="daily-quote glass-card">
+                    <h3>💡 Frase de hoy</h3>
+                    <p id="quote-text">"La amistad duplica las alegrías y divide las angustias por la mitad."</p>
+                </div>
+
+                <div class="actions">
+                    <button class="action-btn primary" onclick="navTo('surprise')">
+                        <i class="fas fa-gift"></i> Abrir Sorpresa
+                    </button>
+                </div>
+            </section>
+
+            <!-- LETTER SECTION -->
+            <section id="letter" class="page">
+                <h2 class="section-title">Una Carta para Ti 💌</h2>
+                <div class="letter-scroll">
+                    <div class="letter-content">
+                        <p class="greeting">Querida Mirella,</p>
+                        <p>
+                            Hoy quise dedicarte este pequeño espacio en internet, porque una persona tan especial como
+                            tú merece un regalo que dure para siempre.
+                        </p>
+                        <p>
+                            Gracias por ser mi apoyo incondicional, por esas pláticas que arreglan el mundo y por tu
+                            risa que es medicina para el alma.
+                        </p>
+                        <p>
+                            Recuerda que eres capaz de lograr todo lo que te propongas. Tienes una magia única. ✨
+                        </p>
+                        <p class="signature">Con mucho cariño,<br>Tu mejor amig@</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GALLERY SECTION -->
+            <section id="gallery" class="page">
+                <h2 class="section-title">Momentos 📸</h2>
+                <div class="gallery-snap">
+                    <!-- Photo Card 1 -->
+                    <div class="scrolling-card">
+                        <div class="img-placeholder gradient-1">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="caption">
+                            <span>Reina</span>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <!-- Photo Card 2 -->
+                    <div class="scrolling-card">
+                        <div class="img-placeholder gradient-2">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="caption">
+                            <span>Fiesta</span>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <!-- Photo Card 3 -->
+                    <div class="scrolling-card">
+                        <div class="img-placeholder gradient-3">
+                            <i class="fas fa-laugh-beam"></i>
+                        </div>
+                        <div class="caption">
+                            <span>Risas</span>
+                            <i class="fas fa-smile-wink"></i>
+                        </div>
+                    </div>
+                    <!-- Photo Card 4 -->
+                    <div class="scrolling-card">
+                        <div class="img-placeholder gradient-1">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="caption">
+                            <span>Viajes</span>
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="hint-text"><i class="fas fa-arrow-left"></i> Desliza para ver más <i
+                        class="fas fa-arrow-right"></i></p>
+            </section>
+
+            <!-- SURPRISE SECTION -->
+            <section id="surprise" class="page">
+                <div class="gift-container">
+                    <h2>¡Tienes un regalo!</h2>
+                    <div class="box-wrapper" id="gift-box">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                    </div>
+                    <div id="message-container" class="hidden">
+                        <div class="final-msg glass-card">
+                            <h1>✨ ¡Eres Increíble! ✨</h1>
+                            <p>No lo olvides nunca.</p>
+                            <button class="restart-btn" onclick="location.reload()"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-target="home">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </div>
+            <div class="nav-item" data-target="letter">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>Carta</span>
+            </div>
+            <div class="nav-item" data-target="gallery">
+                <i class="fas fa-images"></i>
+                <span>Fotos</span>
+            </div>
+            <div class="nav-item" data-target="surprise">
+                <i class="fas fa-gift"></i>
+                <span>Sorpresa</span>
+            </div>
+        </nav>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
