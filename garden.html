@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardín de Rosas 🌹</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="garden-style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;500;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <header class="app-header">
+        <div class="logo">Jardín 🌹</div>
+    </header>
+
+    <main id="garden-container" class="garden-area">
+        <div class="instruction fade-in">
+            <i class="fas fa-hand-pointer"></i>
+            <p>Toca en cualquier lugar para plantar una rosa...</p>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="garden.html" class="nav-item active">
+            <i class="fas fa-seedling"></i>
+            <span>Flores</span>
+        </a>
+        <a href="memories.html" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>Recuerdos</span>
+        </a>
+        <a href="surprise.html" class="nav-item">
+            <i class="fas fa-gift"></i>
+            <span>Sorpresa</span>
+        </a>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>
+        // Local logic for garden page
+        const garden = document.getElementById('garden-container');
+        const hint = document.querySelector('.instruction');
+
+        garden.addEventListener('mousedown', (e) => {
+            if (hint) hint.classList.add('hidden');
+            createRose(e.clientX, e.clientY);
+        });
+
+        garden.addEventListener('touchstart', (e) => {
+            if (hint) hint.classList.add('hidden');
+            const touch = e.touches[0];
+            createRose(touch.clientX, touch.clientY);
+        });
+
+        function createRose(x, y) {
+            const rose = document.createElement('div');
+            rose.className = 'rose';
+            const size = Math.random() * 20 + 30;
+            const rotation = Math.random() * 360;
+
+            rose.style.left = `${x}px`;
+            rose.style.top = `${y}px`;
+            rose.style.setProperty('--rot', `${rotation}deg`);
+
+            garden.appendChild(rose);
+
+            // Limit count for performance
+            if (garden.children.length > 60) {
+                const firstRose = garden.querySelector('.rose');
+                if (firstRose) firstRose.remove();
+            }
+        }
+    </script>
+</body>
+
+</html>

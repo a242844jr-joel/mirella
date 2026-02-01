@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mirella ✨</title>
+    <title>Sorpresa 🎁</title>
     <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="index-style.css">
+    <link rel="stylesheet" href="surprise-style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;500;600;800&display=swap"
         rel="stylesheet">
@@ -17,34 +17,23 @@
     <div class="bg-gradient"></div>
 
     <header class="app-header">
-        <div class="logo">Mirella 💖</div>
+        <div class="logo">Sorpresa ✨</div>
     </header>
 
-    <main class="content fade-in">
-        <div class="hero">
-            <div class="profile-frame">
-                <img src="https://ui-avatars.com/api/?name=Mirella&background=111&color=fff&size=256" alt="Mirella"
-                    class="profile-img">
-                <div class="status-badge">✨</div>
-            </div>
-            <h1>¡Hola, Mirella!</h1>
-            <p class="subtitle">Bienvenida a tu espacio especial.</p>
+    <main class="surprise-container fade-in">
+        <div class="gift-box" id="gift">
+            <div class="lid"></div>
+            <div class="box"></div>
         </div>
 
-        <div class="glass-card quote-box">
-            <h3>💌 Un mensaje</h3>
-            <p>"La verdadera amistad no se trata de quién vino antes, sino de quién llegó y nunca se fue."</p>
-        </div>
-
-        <div class="actions">
-            <a href="garden.html" class="action-btn">
-                <i class="fas fa-seedling"></i> Ir al Jardín
-            </a>
+        <div id="hidden-message" class="hidden glass-card">
+            <h1>¡Eres la mejor!</h1>
+            <p>Gracias por estar siempre ahí, Mirella. Eres luz. ✨</p>
         </div>
     </main>
 
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-item active">
+        <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
@@ -56,11 +45,25 @@
             <i class="fas fa-images"></i>
             <span>Recuerdos</span>
         </a>
-        <a href="surprise.html" class="nav-item">
+        <a href="surprise.html" class="nav-item active">
             <i class="fas fa-gift"></i>
             <span>Sorpresa</span>
         </a>
     </nav>
+
+    <script src="script.js"></script>
+    <script>
+        const gift = document.getElementById('gift');
+        const msg = document.getElementById('hidden-message');
+
+        gift.addEventListener('click', () => {
+            gift.classList.add('open');
+            setTimeout(() => {
+                msg.classList.remove('hidden');
+                msg.classList.add('pop-in');
+            }, 500);
+        });
+    </script>
 </body>
 
 </html>

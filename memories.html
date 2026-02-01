@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mirella ✨</title>
+    <title>Recuerdos 📸</title>
     <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="index-style.css">
+    <link rel="stylesheet" href="memories-style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;500;600;800&display=swap"
         rel="stylesheet">
@@ -17,34 +17,32 @@
     <div class="bg-gradient"></div>
 
     <header class="app-header">
-        <div class="logo">Mirella 💖</div>
+        <div class="logo">Recuerdos 📸</div>
     </header>
 
-    <main class="content fade-in">
-        <div class="hero">
-            <div class="profile-frame">
-                <img src="https://ui-avatars.com/api/?name=Mirella&background=111&color=fff&size=256" alt="Mirella"
-                    class="profile-img">
-                <div class="status-badge">✨</div>
+    <main class="memory-wall fade-in">
+        <div class="memory-card" style="--rot: -3deg">
+            <div class="card-inner">
+                <div class="img-box red-glow"><i class="fas fa-heart"></i></div>
+                <div class="card-text">Nuestra primera foto</div>
             </div>
-            <h1>¡Hola, Mirella!</h1>
-            <p class="subtitle">Bienvenida a tu espacio especial.</p>
         </div>
-
-        <div class="glass-card quote-box">
-            <h3>💌 Un mensaje</h3>
-            <p>"La verdadera amistad no se trata de quién vino antes, sino de quién llegó y nunca se fue."</p>
+        <div class="memory-card" style="--rot: 2deg">
+            <div class="card-inner">
+                <div class="img-box black-glow"><i class="fas fa-music"></i></div>
+                <div class="card-text">Aquella noche...</div>
+            </div>
         </div>
-
-        <div class="actions">
-            <a href="garden.html" class="action-btn">
-                <i class="fas fa-seedling"></i> Ir al Jardín
-            </a>
+        <div class="memory-card" style="--rot: -1deg">
+            <div class="card-inner">
+                <div class="img-box red-glow"><i class="fas fa-star"></i></div>
+                <div class="card-text">Brillando juntas</div>
+            </div>
         </div>
     </main>
 
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-item active">
+        <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
@@ -52,7 +50,7 @@
             <i class="fas fa-seedling"></i>
             <span>Flores</span>
         </a>
-        <a href="memories.html" class="nav-item">
+        <a href="memories.html" class="nav-item active">
             <i class="fas fa-images"></i>
             <span>Recuerdos</span>
         </a>
