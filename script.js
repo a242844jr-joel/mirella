@@ -28,6 +28,110 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- Quiz Logic ---
+    const questions = [
+        {
+            q: "¿Cuál es mi color favorito?",
+            options: ["Azul", "Rojo", "Verde", "Negro"],
+            correct: 1 // Index of correct answer
+        },
+        {
+            q: "¿Qué comida no puedo resistir?",
+            options: ["Pizza", "Sushi", "Hamburguesa", "Tacos"],
+            correct: 0
+        },
+        {
+            q: "¿Dónde nos conocimos?",
+            options: ["En el colegio", "En una fiesta", "Por internet", "En el trabajo"],
+            correct: 0
+        },
+        {
+            q: "¿Cuál es mi mayor sueño?",
+            options: ["Viajar por el mundo", "Ser millonario", "Tener un perro", "Ser feliz contigo"],
+            correct: 3
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let isAnswering = false;
+
+    const quizCard = document.getElementById('quiz-card');
+    const questionText = document.getElementById('question-text');
+    const optionsGrid = document.getElementById('options-grid');
+    const quizScore = document.getElementById('quiz-score');
+    const finalScoreDisplay = document.getElementById('final-score');
+    const finalMessage = document.getElementById('final-message');
+
+    function loadQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showScore();
+            return;
+        }
+
+        const currentQ = questions[currentQuestionIndex];
+        questionText.textContent = currentQ.q;
+        optionsGrid.innerHTML = '';
+
+        currentQ.options.forEach((opt, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => handleAnswer(index, btn);
+            optionsGrid.appendChild(btn);
+        });
+    }
+
+    function handleAnswer(selectedIndex, btnElement) {
+        if (isAnswering) return;
+        isAnswering = true;
+
+        const correctIndex = questions[currentQuestionIndex].correct;
+
+        if (selectedIndex === correctIndex) {
+            btnElement.classList.add('correct');
+            score++;
+            playConfettiShort();
+        } else {
+            btnElement.classList.add('wrong');
+            // Highlight correct one
+            optionsGrid.children[correctIndex].classList.add('correct');
+        }
+
+        setTimeout(() => {
+            currentQuestionIndex++;
+            loadQuestion();
+            isAnswering = false;
+        }, 1200);
+    }
+
+    function showScore() {
+        quizCard.style.display = 'none';
+        quizScore.style.display = 'block';
+        finalScoreDisplay.textContent = `${score}/${questions.length}`;
+
+        if (score === questions.length) {
+            finalMessage.textContent = "¡Increíble! Me conoces mejor que nadie. 💖";
+            startConfetti();
+        } else if (score >= questions.length / 2) {
+            finalMessage.textContent = "¡Nada mal! Pero aún tienes secretos por descubrir. 😉";
+        } else {
+            finalMessage.textContent = "¿Seguro que somos amigos? ¡Es broma! Inténtalo de nuevo. 😂";
+        }
+    }
+
+    window.restartQuiz = function () {
+        currentQuestionIndex = 0;
+        score = 0;
+        quizCard.style.display = 'block';
+        quizScore.style.display = 'none';
+        loadQuestion();
+    };
+
+    // Initialize Quiz if elements exist
+    if (questionText) loadQuestion();
+
+
     // --- Gift Box Interaction ---
     const giftBox = document.getElementById('gift-box');
     const messageContainer = document.getElementById('message-container');
@@ -45,40 +149,34 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 messageContainer.classList.remove('hidden');
                 startConfetti();
-                playAudio(); // Optional, avoiding actual audio file dependency for now
             }, 600);
         });
     }
-
-    // --- Theme Toggle (Extra) ---
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const icon = themeBtn.querySelector('i');
-        if (icon.classList.contains('fa-moon')) {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        }
-    });
-
-    // --- Initial Confetti Burst for fun ---
-    // setTimeout(startConfetti, 1000); 
 });
 
 // --- Confetti Engine ---
 function startConfetti() {
+    launchConfetti(200);
+}
+
+function playConfettiShort() {
+    launchConfetti(50);
+}
+
+function launchConfetti(amount) {
     const canvas = document.getElementById('confetti-canvas');
-    if (!canvas) return; const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     const pieces = [];
-    const colors = ['#FF9A9E', '#FECFEF', '#A18CD1', '#FBC2EB', '#FFF'];
+    const colors = ['#FF1E1E', '#FFFFFF', '#FF0000', '#333333']; // Red, White, Dark
 
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < amount; i++) {
         pieces.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height, // Start above
+            y: Math.random() * canvas.height - canvas.height,
             rotation: Math.random() * 360,
             color: colors[Math.floor(Math.random() * colors.length)],
             size: Math.random() * 8 + 4,
@@ -110,9 +208,4 @@ function startConfetti() {
     }
 
     animate();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
 }
